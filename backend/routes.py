@@ -1,9 +1,13 @@
 from app import app, db
 from flask import request, jsonify
 from models import Friend
+from flask_cors import cross_origin
+
+
 
 # Get all friends
 @app.route("/api/friends",methods=["GET"])
+@cross_origin()  # Ensure CORS is applied here
 def get_friends():
   friends = Friend.query.all() 
   result = [friend.to_json() for friend in friends]
@@ -11,6 +15,7 @@ def get_friends():
 
 # Create a friend
 @app.route("/api/friends",methods=["POST"])
+@cross_origin()  # Ensure CORS is applied here
 def create_friend():
   try:
     data = request.json
@@ -47,6 +52,7 @@ def create_friend():
   
 # Delete a friend
 @app.route("/api/friends/<int:id>",methods=["DELETE"])
+@cross_origin()  # Ensure CORS is applied here
 def delete_friend(id):
   try:
     friend = Friend.query.get(id)
@@ -62,6 +68,7 @@ def delete_friend(id):
   
 # Update a friend profile
 @app.route("/api/friends/<int:id>",methods=["PATCH"])
+@cross_origin()  # Ensure CORS is applied here
 def update_friend(id):
   try:
     friend = Friend.query.get(id)
